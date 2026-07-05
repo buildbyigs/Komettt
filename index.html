@@ -1,0 +1,1539 @@
+               <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>REX STORE - Ultimate Command Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CORE VARIABLES - ULTRA PREMIUM SYSTEM COHESION */
+        :root {
+            --bg-main: #060913;
+            --bg-card: rgba(11, 17, 32, 0.85); 
+            --bg-input: rgba(18, 26, 48, 0.95);
+            --primary-orange: #ff6600;
+            --primary-hover: #ff8533;
+            --text-white: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(255, 102, 0, 0.45);
+            --shadow-glow: rgba(255, 102, 0, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --card-radius: 14px;
+            --accent-green: #10b981;
+        }
+
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background: var(--bg-main) url('baigron.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .global-overlay {
+            background: linear-gradient(to bottom, rgba(6, 9, 19, 0.88), rgba(6, 9, 19, 0.99));
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* INTRO CINEMATIC JJ SYSTEM */
+        #intro-video-wrapper {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 99999999; display: none;
+            justify-content: center; align-items: center; overflow: hidden;
+        }
+        #intro-video-wrapper video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            filter: brightness(0.65) contrast(1.1); 
+            pointer-events: none;
+        }
+        .welcome-jj-text {
+            position: relative; z-index: 2; font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 950;
+            color: var(--text-white); text-transform: uppercase; text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 30px var(--primary-orange), 0 0 60px var(--primary-orange);
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+        
+        .btn-skip-intro {
+            position: absolute; bottom: 50px; right: 50px; z-index: 10;
+            background: rgba(255, 102, 0, 0.2); backdrop-filter: blur(12px);
+            border: 2px solid var(--primary-orange); color: var(--text-white);
+            padding: 14px 32px; border-radius: 50px; font-size: 13px; font-weight: 900;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
+            display: flex; align-items: center; gap: 10px; letter-spacing: 1.5px;
+        }
+        .btn-skip-intro:hover {
+            background: var(--primary-orange); transform: scale(1.06) translateY(-3px);
+            box-shadow: 0 8px 30px var(--shadow-glow);
+        }
+        @media (max-width: 768px) {
+            .btn-skip-intro { bottom: 30px; right: 20px; padding: 12px 24px; font-size: 12px; }
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 20px var(--primary-orange); transform: scale(0.98); }
+            100% { text-shadow: 0 0 45px #ff8533, 0 0 75px var(--primary-orange); transform: scale(1.03); }
+        }
+
+        /* HERO PROFILE COMPONENT */
+        .profile-hero-section {
+            position: relative; width: 100%; height: 320px; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            border-bottom: 2px solid var(--border-glow);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.85);
+        }
+        .profile-hero-section video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            z-index: 0; opacity: 0.45; pointer-events: none;
+        }
+        .hero-overlay-gradient {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(6,9,19,0.3) 0%, rgba(6,9,19,0.95) 100%); z-index: 0;
+        }
+        .profile-pic-container { position: relative; z-index: 1; margin-bottom: 14px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .profile-pic-container:hover { transform: scale(1.08) rotate(3deg); }
+        .profile-pic-container img {
+            width: 115px; height: 115px; border-radius: 50%; object-fit: cover;
+            border: 4px solid var(--primary-orange); box-shadow: 0 0 35px var(--shadow-glow);
+        }
+        .profile-name {
+            position: relative; z-index: 1; font-size: 28px; font-weight: 900; letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.9); color: #fff; text-transform: uppercase;
+        }
+        .profile-badge {
+            position: relative; z-index: 1; background: rgba(255, 102, 0, 0.25); border: 1px solid var(--primary-orange);
+            padding: 6px 20px; border-radius: 30px; font-size: 11px; font-weight: 900; margin-top: 10px; 
+            backdrop-filter: blur(10px); letter-spacing: 1.5px; text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        /* LIVE SYSTEM STATISTICS HUB */
+        .system-counter-hub {
+            display: flex; gap: 15px; max-width: 500px; margin: -25px auto 20px;
+            position: relative; z-index: 10; padding: 0 16px; justify-content: center;
+        }
+        .counter-badge-card {
+            background: linear-gradient(135deg, rgba(11,17,32,0.95), rgba(6,9,19,0.95));
+            border: 1px solid var(--border-glow); padding: 12px 20px; border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7), 0 0 15px rgba(255,102,0,0.15);
+            display: flex; align-items: center; gap: 12px; min-width: 160px; justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        .counter-badge-card i { font-size: 18px; color: var(--primary-orange); }
+        .counter-info-text { display: flex; flex-direction: column; }
+        .counter-value-data { font-size: 15px; font-weight: 900; color: #fff; letter-spacing: 0.5px; }
+        .counter-label-desc { font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; }
+
+        /* ADS BANNER INTERFACE */
+        .ad-carousel-container {
+            width: calc(100% - 32px); max-width: 1000px; height: 210px; margin: 25px auto;
+            border-radius: 16px; overflow: hidden; position: relative;
+            border: 1px solid var(--border-glow); box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            background: var(--bg-card);
+        }
+        @media (max-width: 768px) { .ad-carousel-container { height: 155px; } }
+        .ad-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0; transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ad-slide.active { opacity: 1; }
+
+        header { padding: 20px; width: 100%; position: absolute; top: 0; z-index: 2; }
+        .top-navbar-control { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .menu-trigger-btn { background: transparent; border: none; color: var(--text-white); font-size: 26px; cursor: pointer; text-shadow: 0 0 15px var(--primary-orange); transition: transform 0.2s; }
+        .menu-trigger-btn:hover { transform: scale(1.15); color: var(--primary-hover); }
+        
+        .watermark-global {
+            font-size: 10px; font-weight: 900; color: var(--text-muted); letter-spacing: 2.5px;
+            text-align: center; margin: 15px 0; padding: 8px 22px; border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 30px; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px);
+            display: inline-block; width: fit-content; text-transform: uppercase;
+        }
+
+        /* NAVIGATION TABS */
+        .dashboard-tab-bar {
+            display: flex; gap: 10px; padding: 10px; max-width: 600px; margin: 15px auto 30px;
+            background: var(--bg-card); border-radius: 16px; backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); overflow-x: auto; scrollbar-width: none;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+        }
+        .dashboard-tab-bar::-webkit-scrollbar { display: none; }
+        .tab-trigger {
+            background: transparent; border: none; color: var(--text-muted); padding: 14px 24px;
+            font-size: 12px; font-weight: 900; border-radius: 12px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; gap: 8px; flex-shrink: 0; letter-spacing: 0.8px; flex-grow: 1; justify-content: center;
+            text-transform: uppercase;
+        }
+        .tab-trigger:hover { color: #fff; background: rgba(255,255,255,0.06); }
+        .tab-trigger.active-tab { background: var(--primary-orange); color: var(--text-white); box-shadow: 0 5px 22px var(--shadow-glow); transform: translateY(-2px); }
+
+        .content-viewport-section { display: none; max-width: 1000px; margin: 0 auto; padding: 0 16px; animation: smoothFadeIn 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; opacity: 0; }
+        .content-viewport-section.active-viewport { display: block; }
+        
+        @keyframes smoothFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* PRODUCT RESPONSIVE GRID */
+        .section-headline { font-size: 14px; font-weight: 900; color: var(--primary-orange); margin: 30px 0 20px 0; text-transform: uppercase; letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; }
+        .section-headline::after { content: ''; flex-grow: 1; height: 1px; background: linear-gradient(to right, var(--border-glow), transparent); }
+
+        .products-responsive-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 35px;
+        }
+        @media (min-width: 768px) { .products-responsive-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+
+        /* CARD STYLE PREVENT CLIPPING */
+        .store-item-card {
+            background: var(--bg-card); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: var(--card-radius); padding: 14px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            position: relative; overflow: hidden; 
+            min-height: 290px;
+        }
+        .store-item-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: var(--card-radius); border: 2px solid transparent;
+            box-shadow: inset 0 0 15px transparent; pointer-events: none; transition: all 0.3s;
+        }
+        .store-item-card:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 25px rgba(255, 102, 0, 0.25); }
+        .store-item-card:hover::before { border-color: var(--primary-orange); box-shadow: inset 0 0 15px rgba(255, 102, 0, 0.15); }
+        
+        .product-image-container { width: 100%; height: 95px; border-radius: 10px; overflow: hidden; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); position: relative; background: #000000; }
+        .product-image-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.85; }
+        .store-item-card:hover .product-image-container img { transform: scale(1.08); opacity: 1; }
+        
+        .card-header-title { font-size: 12px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); line-height: 1.4; text-transform: uppercase; letter-spacing: 0.5px; min-height: 34px; display: flex; align-items: center; }
+        
+        /* ORANGE PRICE TEXT */
+        .price-tag-render { font-size: 15px; font-weight: 900; color: var(--primary-orange); margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,102,0,0.25); text-transform: uppercase; }
+        .price-tag-render span { font-size: 9px; color: var(--text-muted); font-weight: 700; text-shadow: none; }
+        
+        /* FIXED QUANTITY STEPPER CONTAINER FRAME */
+        .embedded-calculator-box { 
+            background: rgba(6, 9, 19, 0.7); 
+            border-radius: 8px; 
+            padding: 6px 8px; 
+            margin-bottom: 10px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            width: 100%;
+        }
+        .calc-flex-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 10px; 
+            font-weight: 800; 
+            color: var(--text-muted); 
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .quantity-stepper-wrapper { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            background: var(--bg-input); 
+            padding: 4px 8px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(255,255,255,0.06);
+            flex-grow: 1;
+            justify-content: space-between;
+            max-width: 100%;
+        }
+        .stepper-action-btn { background: transparent; border: none; color: var(--primary-orange); font-size: 14px; font-weight: 900; cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; }
+        .stepper-action-btn:hover { transform: scale(1.3); color: #fff; }
+
+        /* BIG ORANGE SUBMIT ACTION BUTTON */
+        .action-submit-btn { 
+            background: linear-gradient(135deg, var(--primary-orange), #ff751a); 
+            color: #fff; border: none; width: 100%; padding: 10px; border-radius: 10px; 
+            font-weight: 900; font-size: 11px; cursor: pointer; display: flex; align-items: center; 
+            justify-content: center; gap: 6px; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255,102,0,0.35);
+        }
+        .action-submit-btn:hover { background: linear-gradient(135deg, #ff751a, #ff944d); transform: scale(0.97); box-shadow: 0 6px 22px var(--shadow-glow); }
+
+        /* INPUT CONFIGURATION UNITS */
+        .smm-input-field-group { display: flex; align-items: center; background: var(--bg-input); border-radius: 10px; padding: 8px 10px; margin-bottom: 10px; border: 1px solid rgba(255, 255, 255, 0.08); }
+        .smm-input-field-group:focus-within { border-color: var(--primary-orange); box-shadow: 0 0 12px rgba(255,102,0,0.25); }
+        .smm-input-field-group input { background: transparent; border: none; color: #fff; font-size: 12px; font-weight: 800; width: 100%; outline: none; }
+
+        /* MODAL DIALOG CONTAINER PANELS */
+        .modal-view-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 5, 11, 0.9); backdrop-filter: blur(14px); display: none; align-items: center; justify-content: center; z-index: 99999; padding: 20px; opacity: 0; transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .modal-view-backdrop.show { display: flex; opacity: 1; }
+        .modal-surface-container { background: var(--bg-card); border: 1px solid var(--border-glow); width: 100%; max-width: 460px; border-radius: 24px; padding: 35px 30px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 65px rgba(0,0,0,0.95); transform: scale(0.93); transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); }
+        .modal-view-backdrop.show .modal-surface-container { transform: scale(1); }
+        
+        .modal-headline-title { font-size: 20px; font-weight: 900; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+        
+        .form-input-element-group { margin-bottom: 20px; text-align: left; }
+        .form-input-element-group label { display: block; font-size: 12px; font-weight: 900; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
+        .form-input-element-group input, .form-input-element-group textarea { width: 100%; background: var(--bg-input); border: 1px solid var(--glass-border); border-radius: 12px; padding: 16px; color: #fff; font-size: 14px; font-weight: 700; outline: none; transition: all 0.3s; font-family: inherit; }
+        .form-input-element-group input:focus, .form-input-element-group textarea:focus { border-color: var(--primary-orange); box-shadow: 0 0 15px rgba(255,102,0,0.3); }
+
+        .welcome-guide-box { text-align: left; font-size: 13.5px; color: #cbd5e1; line-height: 1.7; max-height: 280px; overflow-y: auto; background: rgba(0,0,0,0.55); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--glass-border); }
+        
+        /* NOTIFICATION DYNAMIC NOTE ALERTS */
+        .system-notice-note {
+            background: rgba(255, 102, 0, 0.08);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            border-radius: 10px; padding: 12px 16px; margin-bottom: 18px;
+            font-size: 11.5px; line-height: 1.5; color: #ff944d; font-weight: 700;
+            display: flex; align-items: flex-start; gap: 10px;
+        }
+        .system-notice-note i { font-size: 14px; margin-top: 1px; color: var(--primary-orange); }
+
+        /* NAVIGATION SIDE DRAWER SYSTEM */
+        .side-navigation-drawer { position: fixed; top: 0; left: -360px; width: 330px; height: 100%; background: rgba(6, 9, 19, 0.99); backdrop-filter: blur(25px); border-right: 1px solid var(--border-glow); z-index: 100000; padding: 40px 25px; transition: left 0.4s cubic-bezier(0.1, 0.9, 0.2, 1); display: flex; flex-direction: column; }
+        .side-navigation-drawer.drawer-open { left: 0; box-shadow: 30px 0 70px rgba(0,0,0,0.95); }
+        .drawer-close-trigger { position: absolute; top: 25px; right: 25px; font-size: 22px; color: var(--primary-orange); cursor: pointer; transition: transform 0.3s; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: rgba(255,102,0,0.1); border-radius: 50%; border: 1px solid rgba(255,102,0,0.2); }
+        .drawer-close-trigger:hover { transform: rotate(90deg); background: rgba(255,102,0,0.25); }
+        
+        .drawer-menu-item { display: flex; align-items: center; gap: 15px; padding: 18px; color: var(--text-white); text-decoration: none; font-size: 14px; font-weight: 800; border-radius: 14px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s; background: rgba(255,255,255,0.03); }
+        .drawer-menu-item:hover { background: rgba(255, 102, 0, 0.12); border: 1px solid var(--border-glow); color: var(--primary-orange); transform: translateX(8px); }
+
+        /* REALISTIC DASHED INVOICE COMPONENT */
+        .receipt-summary-invoice { background: #0c1222; border: 2px dashed rgba(255, 102, 0, 0.45); border-radius: 14px; padding: 22px; margin-bottom: 25px; font-size: 14px; }
+        .invoice-summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: #cbd5e1; }
+        .invoice-summary-row:last-child { margin-bottom: 0; margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.12); font-weight: 900; color: var(--primary-orange); font-size: 18px; }
+        
+        .loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4,6,12,0.96); z-index: 99999999; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
+        .spinner-wheel { width: 75px; height: 75px; border: 6px solid rgba(255, 102, 0, 0.1); border-top: 6px solid var(--primary-orange); border-radius: 50%; animation: spinAnim 0.9s infinite linear; }
+        @keyframes spinAnim { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 102, 0, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-orange); }
+    </style>
+</head>
+<body>
+    <audio id="bgm-player" preload="auto"></audio>
+
+    <!-- INTRO JEDAG-JEDUG CORE GRAPHICS CONTAINER -->
+    <div id="intro-video-wrapper">
+        <video id="jj-intro-vid" playsinline muted>
+            <source src="jj.mp4" type="video/mp4">
+        </video>
+        <div class="welcome-jj-text" id="jj-welcome-txt">WELCOME BACK</div>
+        <button id="skip-jj-btn" class="btn-skip-intro" onclick="skipCinematicIntro()">
+            SKIP SYSTEM <i class="fas fa-forward"></i>
+        </button>
+    </div>
+
+    <!-- PRINCIPAL APP SYSTEM INTERFACE -->
+    <div id="main-app-container" style="display: none;">
+        <div class="global-overlay">
+            
+            <div class="profile-hero-section">
+                <video autoplay loop muted playsinline>
+                    <source src="baigron.mp4" type="video/mp4">
+                </video>
+                <div class="hero-overlay-gradient"></div>
+                
+                <header>
+                    <div class="top-navbar-control">
+                        <button class="menu-trigger-btn" onclick="toggleAppDrawer(true)"><i class="fas fa-bars"></i></button>
+                    </div>
+                </header>
+
+                <div class="profile-pic-container">
+                    <img src="pfp.jpeg" alt="Owner Profile" onerror="this.src='https://via.placeholder.com/150/060913/ff6600?text=REX'">
+                </div>
+                <div class="profile-name">REX STORE</div>
+                <div class="profile-badge"><i class="fas fa-shield-halved"></i> MAIN EXECUTION SYSTEM</div>
+            </div>
+
+            <!-- SYSTEM LIVE VISITOR AND DONE COUNT STATUS DISPLAY -->
+            <div class="system-counter-hub">
+                <div class="counter-badge-card">
+                    <i class="fas fa-circle-check" style="color: var(--accent-green)"></i>
+                    <div class="counter-info-text">
+                        <span class="counter-value-data">67 Pesanan Done</span>
+                        <span class="counter-label-desc">Sistem Sukses</span>
+                    </div>
+                </div>
+                <div class="counter-badge-card">
+                    <i class="fas fa-eye"></i>
+                    <div class="counter-info-text">
+                        <span class="counter-value-data">6402 Users</span>
+                        <span class="counter-label-desc">Total Pengunjung</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <div class="watermark-global"><i class="fas fa-terminal" style="color:var(--primary-orange)"></i> SYSTEM DESIGNED BY IKIYGASIMA</div>
+            </div>
+
+            <!-- PROMO BANNER GRAPHICS CAROUSEL -->
+            <div class="ad-carousel-container">
+                <img src="iklan1.jpeg" class="ad-slide active" onerror="this.src='https://via.placeholder.com/1000x200/0b1120/ff6600?text=REX+STORE+PREMIUM+BANNER+1'">
+                <img src="iklan2.jpeg" class="ad-slide" onerror="this.src='https://via.placeholder.com/1000x200/0b1120/ff6600?text=REX+STORE+PREMIUM+BANNER+2'">
+                <img src="iklan3.jpeg" class="ad-slide" onerror="this.src='https://via.placeholder.com/1000x200/0b1120/ff6600?text=REX+STORE+PREMIUM+BANNER+3'">
+            </div>
+
+            <!-- CENTRAL CONTROLLER TABS NAVIGATION -->
+            <nav class="dashboard-tab-bar">
+                <button class="tab-trigger active-tab" id="tab-lnk-build" onclick="routeDashboardTab('build')"><i class="fas fa-cubes"></i> JASA MAP</button>
+                <button class="tab-trigger" id="tab-lnk-smm" onclick="routeDashboardTab('smm')"><i class="fas fa-fire-flame-curved"></i> SMM PANEL</button>
+                <button class="tab-trigger" id="tab-lnk-dash" onclick="routeDashboardTab('dash')"><i class="fas fa-database"></i> RIWAYAT LOG</button>
+            </nav>
+
+            <!-- MAIN STORE VIEWPORT -->
+            <div id="v-port-build" class="content-viewport-section active-viewport">
+                
+                <!-- MAIN MENU - JASA MAP -->
+                <div class="section-headline"><i class="fas fa-crown"></i> Menu Utama</div>
+                <div class="products-responsive-grid">
+                    
+                    <!-- Item 1: MOUNT REALISTIS -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=MOUNT+REALISTIS'"></div>
+                            <div class="card-header-title">MOUNT REALISTIS</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Kuantitas</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('mountreal', -1, 600000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-mountreal" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('mountreal', 1, 600000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-mountreal">Rp 600.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Mount Realistis Premium', 600000, 'mountreal', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: CLUB -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=CLUB+HANGOUT'"></div>
+                            <div class="card-header-title">CLUB</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Kuantitas</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('club', -1, 300000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-club" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('club', 1, 300000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-club">Rp 300.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Struktur Club Hangout', 300000, 'club', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: MOUNT 5CP (PRICE MATURED ADJUSTMENT) -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=MOUNT+5CP'"></div>
+                            <div class="card-header-title">MOUNT 5CP</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Kuantitas</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('mount5cp', -1, 150000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-mount5cp" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('mount5cp', 1, 150000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-mount5cp">Rp 150.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Arena Gunung Balapan (5 CP)', 150000, 'mount5cp', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: HANGOUT -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=MAP+HANGOUT'"></div>
+                            <div class="card-header-title">HANGOUT</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Kuantitas</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('hangout', -1, 350000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-hangout" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('hangout', 1, 350000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-hangout">Rp 350.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Map Hangout Area', 350000, 'hangout', true)">Pesan</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEV MENU - MENU LAIN -->
+                <div class="section-headline"><i class="fas fa-sliders"></i> Menu Lain (Jasa Developer)</div>
+                <div class="products-responsive-grid">
+                    
+                    <!-- NEW MENU: SOUND 5K PER SOUND -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=SOUND+5K'"></div>
+                            <div class="card-header-title">SOUND 5K PER SOUND</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Jml Audio</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('sound5k', -1, 5000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-sound5k" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('sound5k', 1, 5000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-sound5k">Rp 5.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('SOUND 5K PER SOUND', 5000, 'sound5k', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- NEW MENU: JASA COPY RINTANGAN MAP -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=COPY+RINTANGAN'"></div>
+                            <div class="card-header-title">Jasa Copy Rintangan Map</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Jml CP</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('copyrintangan', -1, 20000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-copyrintangan" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('copyrintangan', 1, 20000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-copyrintangan">Rp 20.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Jasa Copy Rintangan Map', 20000, 'copyrintangan', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- NEW MENU: JASA BUAT ASET ID -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=BUAT+ASET+ID'"></div>
+                            <div class="card-header-title">Jasa Buat Aset ID</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Jml ID</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('buatasetid', -1, 10000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-buatasetid" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('buatasetid', 1, 10000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-buatasetid">Rp 10.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Jasa Buat Aset ID', 10000, 'buatasetid', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- NEW MENU: JASA BUAT OBS PREMIUM -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=OBS+PREMIUM'"></div>
+                            <div class="card-header-title">Jasa Buat Obs Premium</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Jml Obs</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('obspremium', -1, 10000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-obspremium" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('obspremium', 1, 10000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-obspremium">Rp 10.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Jasa Buat Obs Premium', 10000, 'obspremium', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- NEW MENU: MODELING ASET (GACHA) -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=GACHA+ASET'"></div>
+                            <div class="card-header-title">Modeling Aset 30K (Gacha)</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 30.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Modeling Aset (Gacha Pilih 2 Aset)', 30000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- NEW MENU: FIX BACKDOOR -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=FIX+BACKDOOR'"></div>
+                            <div class="card-header-title">Fix Backdoor</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 20.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Fix Backdoor', 20000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- NEW MENU: JASA DEKOR -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=JASA+DEKOR'"></div>
+                            <div class="card-header-title">Jasa Dekor</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 50.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Jasa Dekor', 50000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- NEW MENU: JASA OPTIMASI -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=JASA+OPTIMASI'"></div>
+                            <div class="card-header-title">Jasa Optimasi</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 50.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Jasa Optimasi', 50000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 5: SOUND CLUB / MOUNT REQ -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=SOUND+REQ'"></div>
+                            <div class="card-header-title">SOUND CLUB / MOUNT REQ</div>
+                            <div class="embedded-calculator-box">
+                                <div class="calc-flex-row">
+                                    <span>Kuantitas</span>
+                                    <div class="quantity-stepper-wrapper">
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('soundid', -1, 5000)">-</button>
+                                        <span class="stepper-current-value" id="qty-lbl-soundid" style="font-weight:900; color:#fff; min-width:15px; text-align:center;">1</span>
+                                        <button class="stepper-action-btn" onclick="modifyItemQuantity('soundid', 1, 5000)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="price-lbl-soundid">Rp 5.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('SOUND CLUB / MOUNT SESUAI REQ', 5000, 'soundid', true)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 6: PULAU APUNG CP BUILD -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=PULAU+APUNG+CP'"></div>
+                            <div class="card-header-title">PULAU APUNG CP BUILD</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 20.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('PULAU APUNG CP BUILD', 20000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 7: BC PULAU APUNG BUILD -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=BC+PULAU+APUNG'"></div>
+                            <div class="card-header-title">BC PULAU APUNG BUILD</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 40.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('BC PULAU APUNG BUILD', 40000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 8: SUMMIT BUILD -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=SUMMIT+BUILD'"></div>
+                            <div class="card-header-title">SUMMIT BUILD</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 60.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('SUMMIT BUILD', 60000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 9: SEPAKET BUNDLING -->
+                    <div class="store-item-card" style="border-color: #facc15; box-shadow: 0 0 15px rgba(250, 204, 21, 0.15);">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/facc15?text=BUNDLING+PACK'"></div>
+                            <div class="card-header-title" style="color: #facc15;"><i class="fas fa-bolt-lightning"></i> SEPAKET BUNDLING</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" style="color:#facc15">Rp 100.000</div>
+                            <button class="action-submit-btn" style="background:linear-gradient(135deg, #facc15, #eab308); color:#000;" onclick="dispatchCheckoutSequence('SEPAKET BUNDLING', 100000, 'static', false)"><i class="fas fa-gift"></i> Pesan Paket</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 10: Modeling / Aset 3D -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=MODELING+3D'"></div>
+                            <div class="card-header-title">Modeling / Aset 3D</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 20.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Modeling / Aset 3D', 20000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 11: Buat Places -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=BUAT+PLACES'"></div>
+                            <div class="card-header-title">Buat Places</div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render">Rp 2.000</div>
+                            <button class="action-submit-btn" onclick="dispatchCheckoutSequence('Buat Places', 2000, 'static', false)">Pesan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SMM PANEL SYSTEM VIEWPORT -->
+            <div id="v-port-smm" class="content-viewport-section">
+                
+                <!-- SMM TIKTOK -->
+                <div class="section-headline"><i class="fab fa-tiktok"></i> SMM TikTok Module</div>
+                <div class="products-responsive-grid">
+                    
+                    <!-- Item 12: TikTok Followers Premium -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=TIKTOK+FOLLOWERS'"></div>
+                            <div class="card-header-title">TikTok Followers Premium</div>
+                            <div class="smm-input-field-group">
+                                <input type="number" id="smm-qty-tkf" value="100" min="35" oninput="executeSmmRealtimeCalc('tkf', 50)">
+                                <span style="font-size:10px; font-weight:900; color:var(--text-muted); letter-spacing:1px;">JML</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="smm-price-tkf">Rp 5.000 <span>(Rp50/F)</span></div>
+                            <button class="action-submit-btn" onclick="dispatchSmmCheckout('TikTok Followers Premium', 'tkf', 50)"><i class="fas fa-bolt-lightning"></i> Suntik</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 13: TikTok Likes Terjamin -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=TIKTOK+LIKES'"></div>
+                            <div class="card-header-title">TikTok Likes Terjamin</div>
+                            <div class="smm-input-field-group">
+                                <input type="number" id="smm-qty-tkl" value="100" min="35" oninput="executeSmmRealtimeCalc('tkl', 30)">
+                                <span style="font-size:10px; font-weight:900; color:var(--text-muted); letter-spacing:1px;">JML</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="smm-price-tkl">Rp 3.000 <span>(Rp30/L)</span></div>
+                            <button class="action-submit-btn" onclick="dispatchSmmCheckout('TikTok Likes Terjamin', 'tkl', 30)"><i class="fas fa-bolt-lightning"></i> Suntik</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMM ROBLOX -->
+                <div class="section-headline"><i class="fas fa-gamepad"></i> SMM Roblox Central Optimization</div>
+                <div class="products-responsive-grid">
+                    
+                    <!-- Item 14: Suntik Followers Roblox -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=ROBLOX+FOLLOWERS'"></div>
+                            <div class="card-header-title">Suntik Followers Roblox</div>
+                            <div class="smm-input-field-group">
+                                <input type="number" id="smm-qty-rbf" value="50" min="50" step="50" oninput="executeSmmRealtimeCalc('rbf', 500)">
+                                <span style="font-size:10px; font-weight:900; color:var(--text-muted);">JML</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="smm-price-rbf">Rp 25.000 <span>(Rp500/F)</span></div>
+                            <button class="action-submit-btn" onclick="dispatchSmmCheckout('Followers Roblox', 'rbf', 500)"><i class="fas fa-share-nodes"></i> Order</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 15: Pengunjung Map Roblox -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=ROBLOX+VISITS'"></div>
+                            <div class="card-header-title">Pengunjung Map Roblox</div>
+                            <div class="smm-input-field-group">
+                                <input type="number" id="smm-qty-rbv" value="500" min="500" step="500" oninput="executeSmmRealtimeCalc('rbv', 140)">
+                                <span style="font-size:10px; font-weight:900; color:var(--text-muted);">JML</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="smm-price-rbv">Rp 70.000 <span>(Rp140/V)</span></div>
+                            <button class="action-submit-btn" onclick="dispatchSmmCheckout('Visits Roblox', 'rbv', 140)"><i class="fas fa-share-nodes"></i> Order</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 16: Like Map Roblox -->
+                    <div class="store-item-card">
+                        <div>
+                            <div class="product-image-container"><img src="produk.jpeg" onerror="this.src='https://via.placeholder.com/400x300/000000/ff6600?text=ROBLOX+LIKES'"></div>
+                            <div class="card-header-title">Like Map Roblox</div>
+                            <div class="smm-input-field-group">
+                                <input type="number" id="smm-qty-rbl" value="500" min="500" step="500" oninput="executeSmmRealtimeCalc('rbl', 120)">
+                                <span style="font-size:10px; font-weight:900; color:var(--text-muted);">JML</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="price-tag-render" id="smm-price-rbl">Rp 60.000 <span>(Rp120/L)</span></div>
+                            <button class="action-submit-btn" onclick="dispatchSmmCheckout('Like Map Roblox', 'rbl', 120)"><i class="fas fa-share-nodes"></i> Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRANSACTION ENGINE VIEWPORT LOG -->
+            <div id="v-port-dash" class="content-viewport-section">
+                <div style="background: var(--bg-card); padding: 35px 25px; border-radius: 20px; max-width: 650px; margin: 0 auto; border: 1px solid var(--glass-border); box-shadow: 0 12px 45px rgba(0,0,0,0.75);">
+                    <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 20px;">
+                        <span style="font-weight: 900; font-size: 16px; letter-spacing: 1px;"><i class="fas fa-server" style="color:var(--primary-orange)"></i> LOG & STATUS PESANAN</span>
+                        <button onclick="clearAllTransactionLogs()" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-size: 11px; padding: 10px 18px; border-radius: 10px; font-weight: 900; cursor: pointer; transition: all 0.3s;">Hapus Log</button>
+                    </div>
+                    <div id="history-logs-terminal" style="max-height: 400px; overflow-y: auto; padding-right: 8px;"></div>
+                </div>
+            </div>
+            
+            <footer style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 70px; letter-spacing: 2px; font-weight: 900; line-height: 2;">
+                DEVELOPER REX STORE &copy; 2026<br>ALL PRIVILEGES ARCHIVED
+            </footer>
+        </div>
+    </div>
+
+    <!-- UTILITY DRAWER NAVIGATION COMPONENT -->
+    <div id="app-side-drawer" class="side-navigation-drawer">
+        <div class="drawer-close-trigger" onclick="toggleAppDrawer(false)"><i class="fas fa-times"></i></div>
+        <div style="font-size: 16px; font-weight: 900; color: var(--primary-orange); margin-bottom: 35px; margin-top: 20px; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px solid rgba(255,102,0,0.3); padding-bottom: 15px;">Menu Komunitas</div>
+        
+        <div style="flex-grow: 1;">
+            <a href="https://whatsapp.com/channel/0029VbCOgTBHAdNMcNBWCv1C" target="_blank" class="drawer-menu-item"><i class="fab fa-whatsapp" style="font-size:20px;"></i> Saluran / Testimoni</a>
+            <div class="drawer-menu-item" onclick="openChannelOrderModal()"><i class="fas fa-shopping-bag" style="font-size:20px;"></i> Beli Saluran WA</div>
+            <div class="drawer-menu-item" onclick="openWebDevelopmentModal()"><i class="fas fa-code" style="font-size:20px;"></i> Buat Web Site</div>
+            <div class="drawer-menu-item" onclick="openDiscordFrame()"><i class="fab fa-discord" style="font-size:20px;"></i> Discord Owner</div>
+            <a href="https://www.tiktok.com/@rexyah.life" target="_blank" class="drawer-menu-item"><i class="fab fa-tiktok" style="font-size:20px;"></i> TikTok Rexyah</a>
+            
+            <div class="drawer-menu-item" style="color: #ef4444; border: 1px dashed rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.05); margin-top: 25px;" onclick="openReportSystemModal()"><i class="fas fa-circle-exclamation" style="font-size:20px;"></i> Laporan Keluhan</div>
+        </div>
+        <div style="font-size: 10px; text-align: center; color: var(--text-muted); letter-spacing: 2px; font-weight: 900; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.05);">POWERED BY IKIYGASIMA</div>
+    </div>
+
+    <!-- ONBOARDING SYSTEM FLOW -->
+    <div id="flow-welcome-1" class="modal-view-backdrop">
+        <div class="modal-surface-container" style="text-align:center;">
+            <div style="font-size: 65px; margin-bottom: 25px; color: var(--primary-orange); text-shadow: 0 0 30px var(--shadow-glow);"><i class="fas fa-shield-halved"></i></div>
+            <h2 id="welcome-main-header" style="font-size: 26px; font-weight: 900; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase;">WELCOME TO REX STORE</h2>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 35px; line-height: 1.6;">Pusat Layanan Game Development & Kebutuhan Social Media Moderen yang praktis, rapi, dan tepercaya.</p>
+            <button class="action-submit-btn" style="padding: 16px; font-size: 14px;" onclick="nextWelcomeStep(1)">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 2: USAGE GUIDE -->
+    <div id="flow-welcome-2" class="modal-view-backdrop">
+        <div class="modal-surface-container">
+            <div class="modal-headline-title" style="color:var(--primary-orange)"><i class="fas fa-book-open"></i> Panduan Tata Cara Pemakaian</div>
+            <div class="welcome-guide-box">
+                <p style="font-weight:900; color:#fff; font-size:14px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom:12px; margin-bottom: 12px;">Mohon luangkan waktu untuk membaca instruksi berikut:</p>
+                <p style="color:var(--primary-orange); font-weight:900; margin-top:15px;"><i class="fas fa-compass"></i> 1. Jelajahi Katalog</p>
+                <p style="margin-bottom: 12px;">Navigasi melalui menu di atas untuk memilih layanan Jasa Game Roblox maupun Kebutuhan SMM Anda.</p>
+                <p style="color:var(--primary-orange); font-weight:900; margin-top:15px;"><i class="fas fa-layer-group"></i> 2. Kuantitas Fleksibel</p>
+                <p style="margin-bottom: 12px;">Gunakan modul penambah kuantitas (+/-) pada produk utama untuk menyesuaikan volume pengerjaan pesanan secara real-time.</p>
+                <p style="color:var(--primary-orange); font-weight:900; margin-top:15px;"><i class="fas fa-file-invoice"></i> 3. Input Target & Struk</p>
+                <p style="margin-bottom: 12px;">Isi link target/rincian pengerjaan dengan detail. Sistem akan mencetak nota transaksi digital otomatis sebelum diarahkan ke WA Admin.</p>
+            </div>
+            <button class="action-submit-btn" style="padding: 16px; font-size: 14px;" onclick="nextWelcomeStep(2)">Lanjut Sistem <i class="fas fa-circle-check"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 3: REGISTRATION CONTAINER -->
+    <div id="flow-welcome-3" class="modal-view-backdrop">
+        <div class="modal-surface-container" style="text-align: center;">
+            <div class="modal-headline-title" style="justify-content: center; color:var(--primary-orange); font-size: 24px;"><i class="fas fa-user-gear"></i> Pendaftaran Akun</div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 30px;">Silakan masukkan nama atau nickname untuk memperlancar sesi pesanan Anda ke depannya.</p>
+            <div class="form-input-element-group">
+                <input type="text" id="global-user-name" placeholder="Ketik nama Anda di sini..." style="text-align: center; font-size: 18px; font-weight: 900; padding: 20px;">
+            </div>
+            <button class="action-submit-btn" style="padding: 16px; font-size: 14px;" onclick="initiateCinematicSequence(false)"><i class="fas fa-bolt"></i> Mulai Akses Hub</button>
+        </div>
+    </div>
+
+    <!-- TRANSACTION DETAIL INPUT DISPATCH MODAL -->
+    <div id="app-modal-backdrop" class="modal-view-backdrop">
+        <div class="modal-surface-container">
+            <button class="drawer-close-trigger" style="position: absolute; top:15px; right:15px;" onclick="toggleAppModal('app-modal-backdrop', false)"><i class="fas fa-times"></i></button>
+            <div class="modal-headline-title" id="app-modal-header-lbl"><i class="fas fa-file-invoice-dollar"></i> Rincian Formulir Pesanan</div>
+            
+            <!-- PRICING NOTE ALERT FOR SYSTEM ADD-ONS -->
+            <div class="system-notice-note">
+                <i class="fas fa-circle-info"></i>
+                <span><strong>PENTING:</strong> Harga dasar tercantum belum termasuk penambahan sistem kustom. Harga bisa berubah jika Anda ingin menambahkan skrip/sistem mekanis khusus pada map.</span>
+            </div>
+
+            <div class="receipt-summary-invoice">
+                <div style="font-weight:900; font-size:12px; color:var(--primary-orange); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">Deskripsi Layanan:</div>
+                <div id="inv-prod-desc" style="font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:15px; padding-bottom:12px; border-bottom:1px dashed rgba(255,255,255,0.1);">-</div>
+                
+                <div class="invoice-summary-row"><span>Produk:</span> <span id="inv-prod-title" style="text-align: right; max-width: 65%; font-weight:800; color:#fff;">-</span></div>
+                <div class="invoice-summary-row"><span>Kuantitas:</span> <span id="inv-prod-qty" style="font-weight:800; color:#fff;">-</span></div>
+                <div class="invoice-summary-row"><span>Total Tagihan:</span> <span id="inv-prod-total">-</span></div>
+            </div>
+            <div class="form-input-element-group">
+                <label>Nama Pengguna Pemesan</label>
+                <input type="text" id="form-buyer-name" placeholder="Nama lengkap Anda...">
+            </div>
+            <div class="form-input-element-group">
+                <label id="form-dynamic-target-lbl">Link Target / Rincian Order</label>
+                <textarea id="form-buyer-target" placeholder="Tulis rincian pengerjaan / link tujuan secara akurat..." rows="3"></textarea>
+            </div>
+            <button class="action-submit-btn" id="modal-submit-integration-btn" style="padding: 16px; font-size: 14px;"><i class="fas fa-receipt"></i> Generate Struk Digital</button>
+        </div>
+    </div>
+
+    <!-- STRUK MODAL LOOKUP PRE-GATEWAY PREVIEW -->
+    <div id="receipt-preview-modal" class="modal-view-backdrop">
+        <div class="modal-surface-container" style="max-width: 420px; background:#ffffff; color:#111827; padding:25px;">
+            <div style="text-align:center; border-bottom:2px dashed #9ca3af; padding-bottom:15px; margin-bottom:15px;">
+                <h3 style="font-size:24px; font-weight:900; color:#ff6600; letter-spacing:1px;">REX STORE RECEIPT</h3>
+                <p style="font-size:11px; color:#4b5563; font-weight:800; margin-top:2px;">AUTOMATED TRANSACTION SLIP</p>
+            </div>
+            
+            <div style="font-family:monospace; font-size:12px; line-height:1.6;">
+                <div style="display:flex; justify-content:space-between;"><span>ID TRANS:</span><span id="st-id" style="font-weight:bold;">-</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>TANGGAL:</span><span id="st-date">-</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>PEMESAN:</span><span id="st-name" style="font-weight:bold;">-</span></div>
+                <div style="border-top:1px dashed #d1d5db; margin:10px 0; padding-top:10px;"></div>
+                <div style="font-weight:bold; margin-bottom:4px;">ITEM DETAIL:</div>
+                <div style="display:flex; justify-content:space-between;"><span id="st-item">-</span><span id="st-qty">-</span></div>
+                <div style="margin-top:6px; color:#4b5563; font-style:italic; font-size:11px; max-width:100%; word-break:break-all;">Target: <span id="st-target">-</span></div>
+                <div style="border-top:1px dashed #d1d5db; margin:10px 0; padding-top:10px;"></div>
+                <div style="display:flex; justify-content:space-between; font-size:16px; font-weight:900; color:#ff6600;"><span>TOTAL BILL:</span><span id="st-total">-</span></div>
+            </div>
+            
+            <div style="text-align:center; margin-top:20px; font-size:10px; color:#6b7280; font-weight:bold; border-top:1px dashed #d1d5db; padding-top:12px;">
+                * TERIMA KASIH TELAH MEMILIH REX STORE *<br>POWERED BY IKIYGASIMA
+            </div>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:25px;">
+                <button class="action-submit-btn" style="background:#4b5563;" onclick="downloadReceiptAsImage()"><i class="fas fa-file-arrow-down"></i> Unduh PNG</button>
+                <button class="action-submit-btn" id="receipt-continue-wa-btn"><i class="fab fa-whatsapp"></i> Lanjut (WA)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXTERNAL PROCESS MODALS -->
+    <div id="channel-modal-backdrop" class="modal-view-backdrop">
+        <div class="modal-surface-container">
+            <button class="drawer-close-trigger" style="position: absolute; top:15px; right:15px;" onclick="toggleAppModal('channel-modal-backdrop', false)"><i class="fas fa-times"></i></button>
+            <div class="modal-headline-title"><i class="fab fa-whatsapp" style="color:var(--primary-orange)"></i> Beli Saluran WA</div>
+            
+            <div class="system-notice-note">
+                <i class="fas fa-circle-info"></i>
+                <span>Note: Harga bisa berubah jika ingin menambahkan sistem kustomisasi bot atau optimasi advance.</span>
+            </div>
+
+            <div class="form-input-element-group"><label>Nama Pembeli</label><input type="text" id="channel-buyer-name" placeholder="Nama Anda..."></div>
+            <div class="form-input-element-group"><label>Jumlah Pengikut (Min. 50)</label><input type="number" id="channel-followers-qty" value="50" min="50" oninput="calculateChannelPriceRealtime()"></div>
+            <div class="receipt-summary-invoice"><div class="invoice-summary-row"><span>Estimasi Biaya:</span> <span id="channel-calc-total" style="font-weight:bold; color:#fff;">Rp 20.000</span></div></div>
+            <button class="action-submit-btn" onclick="submitChannelOrderSequence()"><i class="fas fa-paper-plane"></i> Kirim Order</button>
+        </div>
+    </div>
+
+    <div id="web-modal-backdrop" class="modal-view-backdrop">
+        <div class="modal-surface-container">
+            <button class="drawer-close-trigger" style="position: absolute; top:15px; right:15px;" onclick="toggleAppModal('web-modal-backdrop', false)"><i class="fas fa-times"></i></button>
+            <div class="modal-headline-title"><i class="fas fa-code"></i> Pengerjaan Website Kustom</div>
+            
+            <div class="system-notice-note">
+                <i class="fas fa-circle-info"></i>
+                <span>Note: Estimasi biaya dasar web dapat berubah menyesuaikan kompleksitas sistem database atau integrasi AI.</span>
+            </div>
+
+            <div class="form-input-element-group"><label>Nama Instansi / Klien</label><input type="text" id="web-client-name" placeholder="Nama proyek/klien Anda..."></div>
+            <div class="form-input-element-group"><label>Spesifikasi & Kebutuhan Fitur</label><textarea id="web-spec" rows="4" placeholder="Jelaskan kebutuhan website impian Anda di sini..."></textarea></div>
+            <button class="action-submit-btn" onclick="submitWebDevelopmentOrder()"><i class="fas fa-paper-plane"></i> Ajukan Proposal</button>
+        </div>
+    </div>
+
+    <div id="discord-modal-backdrop" class="modal-view-backdrop">
+        <div class="modal-surface-container" style="text-align: center;">
+            <button class="drawer-close-trigger" style="position: absolute; top:15px; right:15px;" onclick="toggleAppModal('discord-modal-backdrop', false)"><i class="fas fa-times"></i></button>
+            <div class="modal-headline-title" style="justify-content: center;"><i class="fab fa-discord" style="color:#5865F2; font-size:32px;"></i> Discord Connectivity</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 25px;">Salin dan tambahkan ID tag berikut untuk berkomunikasi langsung dengan owner.</p>
+            <div style="background: rgba(88, 101, 242, 0.1); padding: 25px; border-radius: 16px; font-size: 26px; font-weight: 950; border: 1px dashed #5865F2; margin-bottom: 30px; color: #fff; letter-spacing: 2px;">rexyah21</div>
+            <button class="action-submit-btn" style="background: linear-gradient(135deg, #5865F2, #4752C4); padding: 16px;" onclick="copyToClipboard('rexyah21')"><i class="fas fa-copy"></i> Salin Tag Akun</button>
+        </div>
+    </div>
+
+    <div id="report-modal-backdrop" class="modal-view-backdrop">
+        <div class="modal-surface-container">
+            <button class="drawer-close-trigger" style="position: absolute; top:15px; right:15px;" onclick="toggleAppModal('report-modal-backdrop', false)"><i class="fas fa-times"></i></button>
+            <div class="modal-headline-title" style="color:#ef4444"><i class="fas fa-triangle-exclamation"></i> Laporan Kendala Sistem</div>
+            <div class="form-input-element-group"><label>Nama Pelapor</label><input type="text" id="report-sender-name" placeholder="Nama Anda..."></div>
+            <div class="form-input-element-group"><label>Deskripsi Detail Bug / Keluhan</label><textarea id="report-issue-details" rows="4" placeholder="Tuliskan kendala transaksi atau masalah peta di sini..."></textarea></div>
+            <button class="action-submit-btn" style="background: linear-gradient(135deg, #ef4444, #dc2626);" onclick="submitReportSystemLog()"><i class="fas fa-paper-plane"></i> Kirim Laporan</button>
+        </div>
+    </div>
+
+    <!-- MAIN LOADING GATEWAY TRANSITION CONTAINER -->
+    <div id="global-process-loader" class="loader-overlay">
+        <div class="spinner-wheel"></div>
+        <div style="margin-top: 35px; font-size: 18px; font-weight: 950; color: var(--primary-orange); letter-spacing: 4px; text-shadow: 0 0 15px rgba(255,102,0,0.65);">PROSES TRANSFER...</div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-top: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Mengalihkan Koneksi ke WhatsApp Gateway</div>
+    </div>
+
+    <script>
+        // INTERNAL DESCRIPTIONS DICTIONARY LOGIC - STRICTLY COMPREHENSIVE
+        const PRODUCT_DESCRIPTIONS = {
+            'Mount Realistis Premium': 'Peta pegunungan dengan kualitas visual realistis tingkat tinggi, render shading dinamis, dan topografi kompleks.',
+            'Struktur Club Hangout': 'Desain arsitektur interior klub malam premium modern lengkap dengan pengaturan tata efek lampu mewah.',
+            'Arena Gunung Balapan (5 CP)': 'Peta terjal jalur pegunungan menantang dengan konfigurasi rintangan murni mumpuni (5 Pos Checkpoint).',
+            'Map Hangout Area': 'Zona komunal bersantai estetik outdoor dengan penataan vegetasi alam rapi dan pencahayaan teduh.',
+            'SOUND 5K PER SOUND': 'Jasa pengisian file track audio sound kustom premium per sound track. (Wajib Menyertakan Link YouTube pada Target/Keterangan).',
+            'Jasa Copy Rintangan Map': 'Duplikasi rintangan map presisi tinggi bergaransi rapi, dihitung per pos Checkpoint (CP).',
+            'Jasa Buat Aset ID': 'Pembuatan identifikasi kode aset game Roblox kustom profesional, dihitung per buah ID.',
+            'Modeling Aset (Gacha Pilih 2 Aset)': 'Paket Gacha modeling komparatif, sistem otomatis memberikan opsi pemilihan 2 aset bebas kustom siap pakai.',
+            'Fix Backdoor': 'Pembersihan script jahat, virus studio loader, malicious backdoor injection, dan pengamanan total peta game.',
+            'Jasa Dekor': 'Pemberian sentuhan interior eksterior mewah, penataan pencahayaan atmosferik, serta pengisian perabotan map.',
+            'Jasa Optimasi': 'Peningkatan optimalisasi kinerja engine data, pengurangan frame drop / lag map, stabilizer anti-crash.',
+            'Jasa Buat Obs Premium': 'Pembuatan obstacle (rintangan mekanis) premium dengan sistem skrip pergerakan halus, per buah rintangan.',
+            'SOUND CLUB / MOUNT SESUAI REQ': 'Pengerjaan kustomisasi khusus sound sistem club atau arsitektur audio map mount sesuai arahan blueprint Anda.',
+            'PULAU APUNG CP BUILD': 'Pembuatan map melayang pulau apung eksotis dengan checkpoint lintasan terstruktur.',
+            'BC PULAU APUNG BUILD': 'Peta arena pertempuran battleground pulau apung dengan komponen interaktif premium.',
+            'SUMMIT BUILD': 'Desain area puncak (summit) pegunungan eksklusif untuk kebutuhan lobi game atau area khusus.',
+            'SEPAKET BUNDLING': 'Paket hemat super komplit mencakup kepemilikan aset Summit, Battleground, dan Pulau Apung CP secara instan.',
+            'Modeling / Aset 3D': 'Pembuatan item kustom fungsional, perabotan, dan mekanika modular Studio Lite.',
+            'Buat Places': 'Jasa pembuatan Places kustom tambahan dengan optimasi skrip sistem terintegrasi.',
+            'TikTok Followers Premium': 'Layanan optimasi peningkatan jumlah followers akun TikTok global berkualitas tinggi real-human base.',
+            'TikTok Likes Terjamin': 'Suntik interaksi likes postingan video TikTok bergaransi untuk menaikkan rasio FYP.',
+            'Followers Roblox': 'Injeksi kuantitas pengikut profil akun Roblox global instan aman dari risiko banned.',
+            'Visits Roblox': 'Layanan peningkatan statistik traffic jumlah pengunjung map game Roblox Anda.',
+            'Like Map Roblox': 'Suntik akumulasi feedback positif likes pada map game Roblox untuk menaikkan kredibilitas.'
+        };
+
+        // FOCUS WHATSAPP NUMBER GATEWAY FOR ALL MENUS
+        const WA_FOCUSED_GATEWAY = "6282190691751"; 
+        let activeCtx = {};
+
+        // USER IDENTITY MANAGEMENT & ONBOARDING INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                let savedUser = localStorage.getItem('rex_username');
+                if (savedUser && savedUser.trim() !== "") {
+                    document.getElementById('welcome-main-header').innerText = "WELCOME BACK TO REX STORE";
+                    document.getElementById('global-user-name').value = savedUser;
+                    document.getElementById('form-buyer-name').value = savedUser;
+                    document.getElementById('channel-buyer-name').value = savedUser;
+                }
+                document.getElementById('flow-welcome-1').classList.add('show');
+                loadSavedTransactions();
+            } catch (error) {
+                console.error("Critical core setup exception:", error);
+            }
+        });
+
+        // BGM PLAYLIST CONTROLLER AUDIO LOOP SYSTEM
+        const bgmPlayer = document.getElementById('bgm-player');
+        const playlist = ['1.mp3', '2.mp3']; 
+        let currentTrack = 0;
+        
+        bgmPlayer.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            bgmPlayer.src = playlist[currentTrack];
+            bgmPlayer.play().catch(e => console.warn("Audio thread constraint detected."));
+        });
+
+        function startBackgroundMusic() {
+            try {
+                bgmPlayer.src = playlist[currentTrack];
+                bgmPlayer.volume = 0.35;
+                bgmPlayer.play().catch(e => console.warn("User authorization needed for sound synthesis."));
+            } catch (error) {}
+        }
+
+        // INTEGRATED STEP SEQUENCER
+        function nextWelcomeStep(currentStep) {
+            document.getElementById(`flow-welcome-${currentStep}`).classList.remove('show');
+            let savedUser = localStorage.getItem('rex_username');
+            
+            if (currentStep === 1) {
+                setTimeout(() => {
+                    document.getElementById('flow-welcome-2').classList.add('show');
+                }, 300);
+            } else if (currentStep === 2) {
+                if (savedUser && savedUser.trim() !== "") {
+                    setTimeout(() => {
+                        initiateCinematicSequence(true); 
+                    }, 300);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('flow-welcome-3').classList.add('show');
+                    }, 300);
+                }
+            }
+        }
+
+        function finishCinematicIntro() {
+            const jjContainer = document.getElementById('intro-video-wrapper');
+            const jjVid = document.getElementById('jj-intro-vid');
+            try { jjVid.pause(); } catch(e) {}
+            jjContainer.style.display = 'none';
+            document.getElementById('main-app-container').style.display = 'block';
+            startBackgroundMusic();
+        }
+
+        function skipCinematicIntro() {
+            finishCinematicIntro();
+        }
+
+        function initiateCinematicSequence(isBypassed) {
+            let userName = 'GUEST';
+            
+            if (!isBypassed) {
+                let nameInput = document.getElementById('global-user-name').value.trim();
+                userName = nameInput || 'GUEST';
+                localStorage.setItem('rex_username', userName);
+                document.getElementById('form-buyer-name').value = userName;
+                document.getElementById('channel-buyer-name').value = userName;
+                document.getElementById('flow-welcome-3').classList.remove('show');
+            } else {
+                userName = localStorage.getItem('rex_username') || 'VIP USER';
+            }
+            
+            const jjContainer = document.getElementById('intro-video-wrapper');
+            const jjVid = document.getElementById('jj-intro-vid');
+            document.getElementById('jj-welcome-txt').innerText = `WELCOME, ${userName}!`;
+            
+            jjContainer.style.display = 'flex';
+            try {
+                jjVid.muted = false; 
+                let playPromise = jjVid.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        jjVid.onended = () => finishCinematicIntro();
+                    }).catch(() => finishCinematicIntro());
+                }
+            } catch (error) {
+                finishCinematicIntro();
+            }
+        }
+
+        // AUTO-SLIDING ADS ROTATOR SYSTEM
+        const ads = document.querySelectorAll('.ad-slide');
+        let currentAdIndex = 0;
+        if(ads.length > 0) {
+            setInterval(() => {
+                try {
+                    ads[currentAdIndex].classList.remove('active');
+                    currentAdIndex = (currentAdIndex + 1) % ads.length;
+                    ads[currentAdIndex].classList.add('active');
+                } catch(e) {}
+            }, 5000);
+        }
+
+        // VIEW UTILITIES WINDOW NAVIGATION LAYERS
+        function toggleAppDrawer(open) { 
+            const drawer = document.getElementById('app-side-drawer');
+            if(drawer) drawer.classList.toggle('drawer-open', open); 
+        }
+        
+        function toggleAppModal(id, open) { 
+            const el = document.getElementById(id);
+            if(!el) return;
+            if(open) el.classList.add('show'); else el.classList.remove('show');
+        }
+
+        function openChannelOrderModal() { toggleAppDrawer(false); toggleAppModal('channel-modal-backdrop', true); }
+        function openWebDevelopmentModal() { toggleAppDrawer(false); toggleAppModal('web-modal-backdrop', true); }
+        function openDiscordFrame() { toggleAppDrawer(false); toggleAppModal('discord-modal-backdrop', true); }
+        function openReportSystemModal() { toggleAppDrawer(false); toggleAppModal('report-modal-backdrop', true); }
+
+        function copyToClipboard(text) {
+            try {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert("ID Owner Discord berhasil disalin: " + text);
+                    toggleAppModal('discord-modal-backdrop', false);
+                }).catch(() => prompt("Salin manual ID berikut:", text));
+            } catch (err) {
+                prompt("Salin manual ID berikut:", text);
+            }
+        }
+
+        function routeDashboardTab(tabId) {
+            const tabs = ['build', 'smm', 'dash'];
+            tabs.forEach(t => {
+                const trigger = document.getElementById('tab-lnk-' + t);
+                const viewport = document.getElementById('v-port-' + t);
+                if(trigger && viewport) {
+                    if (t === tabId) {
+                        trigger.classList.add('active-tab');
+                        viewport.classList.add('active-viewport');
+                    } else {
+                        trigger.classList.remove('active-tab');
+                        viewport.classList.remove('active-viewport');
+                    }
+                }
+            });
+        }
+
+        // STEPPER LOGIC FOR ROBLOX ITEMS & NEW UTILITIES
+        let rbxQuantities = { 
+            mountreal: 1, club: 1, mount5cp: 1, hangout: 1, soundid: 1,
+            sound5k: 1, copyrintangan: 1, buatasetid: 1, obspremium: 1
+        };
+        function modifyItemQuantity(key, step, unitPrice) {
+            try {
+                let currentVal = rbxQuantities[key] || 1;
+                let newVal = currentVal + step; 
+                if (newVal < 1) newVal = 1;
+                rbxQuantities[key] = newVal;
+                document.getElementById('qty-lbl-' + key).textContent = newVal;
+                document.getElementById('price-lbl-' + key).textContent = "Rp " + (newVal * unitPrice).toLocaleString('id-ID');
+            } catch (error) {}
+        }
+
+        function executeSmmRealtimeCalc(key, unitPrice) {
+            try {
+                let inputEl = document.getElementById('smm-qty-' + key);
+                let val = parseInt(inputEl.value, 10);
+                let priceEl = document.getElementById('smm-price-' + key);
+                if (isNaN(val) || val < 1) { priceEl.innerHTML = "Rp 0"; return; }
+                priceEl.innerHTML = "Rp " + Math.round(val * unitPrice).toLocaleString('id-ID') + ` <span>(Rp${unitPrice}/item)</span>`;
+            } catch (error) {}
+        }
+
+        function calculateChannelPriceRealtime() {
+            try {
+                let qty = parseInt(document.getElementById('channel-followers-qty').value, 10);
+                let lbl = document.getElementById('channel-calc-total');
+                if(isNaN(qty) || qty < 50) { lbl.textContent = "Min. 50 Followers"; return; }
+                lbl.textContent = "Rp " + ((qty / 50) * 20000).toLocaleString('id-ID');
+            } catch (error) {}
+        }
+
+        // DISPATCH DATA FLOW INTEGRITY CONTROL
+        function dispatchCheckoutSequence(name, rate, key, dynamic) {
+            try {
+                let qty = dynamic ? (rbxQuantities[key] || 1) : 1;
+                activeCtx = { title: name, q: qty, c: dynamic ? (rate * qty) : rate };
+                
+                document.getElementById('inv-prod-title').textContent = name;
+                document.getElementById('inv-prod-qty').textContent = `${qty} Unit/Paket`;
+                document.getElementById('inv-prod-total').textContent = "Rp " + activeCtx.c.toLocaleString('id-ID');
+                document.getElementById('inv-prod-desc').textContent = PRODUCT_DESCRIPTIONS[name] || "Layanan premium game development khusus.";
+                
+                let targetInput = document.getElementById('form-buyer-target');
+                let targetLabel = document.getElementById('form-dynamic-target-lbl');
+                
+                if(name === 'SOUND 5K PER SOUND') {
+                    targetLabel.innerHTML = "Link YouTube Audio <span style='color: #ff6600;'>(WAJIB)</span> / Rincian Req <span style='color:red'>*</span>";
+                    targetInput.placeholder = "Wajib masukkan link YouTube video / track audio yang ingin diambil di sini...";
+                } else {
+                    targetLabel.innerHTML = "Link Target / Rincian Deskripsi Order <span style='color:red'>*</span>";
+                    targetInput.placeholder = "Tulis rincian pengerjaan / map target / link tujuan secara akurat...";
+                }
+                
+                targetInput.value = ""; 
+                toggleAppModal('app-modal-backdrop', true);
+            } catch (error) { alert("Sistem checkout gagal merespon data."); }
+        }
+
+        function dispatchSmmCheckout(name, key, rate) {
+            try {
+                let qty = parseInt(document.getElementById('smm-qty-' + key).value, 10);
+                let minQty = parseInt(document.getElementById('smm-qty-' + key).min, 10) || 1;
+                if (isNaN(qty) || qty < minQty) { alert(`Minimal order ${minQty}`); return; }
+                
+                activeCtx = { title: name, q: qty, c: Math.round(qty * rate) };
+                document.getElementById('inv-prod-title').textContent = name;
+                document.getElementById('inv-prod-qty').textContent = `${qty.toLocaleString('id-ID')} Item`;
+                document.getElementById('inv-prod-total').textContent = "Rp " + activeCtx.c.toLocaleString('id-ID');
+                
+                document.getElementById('inv-prod-desc').textContent = PRODUCT_DESCRIPTIONS[name] || "Layanan optimasi SMM panel instan.";
+                document.getElementById('form-dynamic-target-lbl').innerHTML = "Link Target Akun / URL Konten Video <span style='color:red'>*</span>";
+                document.getElementById('form-buyer-target').placeholder = "Masukkan link url target sosmed / profile game...";
+                document.getElementById('form-buyer-target').value = "";
+                
+                toggleAppModal('app-modal-backdrop', true);
+            } catch (error) {}
+        }
+
+        // GENERATE DIGITAL STRUK PRE-GATEWAY INTERFACING
+        document.getElementById('modal-submit-integration-btn').onclick = function() {
+            let name = document.getElementById('form-buyer-name').value.trim();
+            let target = document.getElementById('form-buyer-target').value.trim();
+            
+            if (!name) return alert("❌ Mohon isi Nama Pemesan!");
+            if (!target) return alert("❌ Mohon sertakan rincian target / link wajib secara lengkap!");
+            
+            if (activeCtx.title === 'SOUND 5K PER SOUND' && !target.toLowerCase().includes('youtu')) {
+                return alert("❌ Untuk produk ini, Anda wajib menyertakan Link YouTube pada kolom rincian target!");
+            }
+
+            activeCtx.buyer = name;
+            activeCtx.target = target;
+            activeCtx.id = "RX-" + Math.floor(10000 + Math.random() * 90000);
+            
+            let today = new Date();
+            activeCtx.dateStr = today.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) + " " + today.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+            document.getElementById('st-id').textContent = activeCtx.id;
+            document.getElementById('st-date').textContent = activeCtx.dateStr;
+            document.getElementById('st-name').textContent = name;
+            document.getElementById('st-item').textContent = activeCtx.title;
+            document.getElementById('st-qty').textContent = "x" + activeCtx.q;
+            document.getElementById('st-target').textContent = target;
+            document.getElementById('st-total').textContent = "Rp " + activeCtx.c.toLocaleString('id-ID');
+
+            toggleAppModal('app-modal-backdrop', false);
+            toggleAppModal('receipt-preview-modal', true);
+
+            document.getElementById('receipt-continue-wa-btn').onclick = function() {
+                let msg = `*ORDER REX STORE - INVOICE SLIP*\n━━━━━━━━━━━━━━━━━━━━\n👤 *Klien:* ${name}\n🆔 *TRANS ID:* ${activeCtx.id}\n📦 *Layanan:* ${activeCtx.title}\n🔢 *Kuantitas:* ${activeCtx.q}\n🔗 *Detail/Target:*\n_${target}_\n━━━━━━━━━━━━━━━━━━━━\n💰 *Total Tagihan:* Rp ${activeCtx.c.toLocaleString('id-ID')}\n\n_Struk digital tersimpan otomatis di log data. Mohon segera dikonfirmasi._`;
+                
+                // Save complete transaction and system status tracking
+                saveLogToTerminal(activeCtx.id, activeCtx.dateStr, activeCtx.title, activeCtx.q, activeCtx.c, name, target, "Memasuki Antrean");
+                toggleAppModal('receipt-preview-modal', false);
+                forceRedirectWA(WA_FOCUSED_GATEWAY, msg);
+            };
+        };
+
+        // RENDER STRUK DIGITAL INTO PNG
+        function downloadReceiptAsImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 500; canvas.height = 680;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.lineWidth = 4; ctx.strokeStyle = '#111827'; ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+
+            ctx.fillStyle = '#ff6600'; ctx.font = 'bold 28px sans-serif'; ctx.textAlign = 'center';
+            ctx.fillText("REX STORE RECEIPT", canvas.width / 2, 75);
+
+            ctx.fillStyle = '#4b5563'; ctx.font = 'bold 13px monospace';
+            ctx.fillText("AUTOMATED TRANSACTION SLIP", canvas.width / 2, 100);
+
+            ctx.strokeStyle = '#374151'; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+            ctx.beginPath(); ctx.moveTo(30, 125); ctx.lineTo(470, 125); ctx.stroke();
+
+            ctx.setLineDash([]); ctx.textAlign = 'left'; ctx.fillStyle = '#111827'; ctx.font = '15px monospace';
+            ctx.fillText(`TRANS ID : ${activeCtx.id || 'RX-UNKNOWN'}`, 40, 165);
+            ctx.fillText(`TANGGAL  : ${activeCtx.dateStr || '-'}`, 40, 200);
+            ctx.fillText(`PEMESAN  : ${activeCtx.buyer || '-'}`, 40, 235);
+
+            ctx.setLineDash([6, 4]); ctx.beginPath(); ctx.moveTo(30, 265); ctx.lineTo(470, 265); ctx.stroke();
+
+            ctx.setLineDash([]); ctx.font = 'bold 16px sans-serif'; ctx.fillText("ITEM DETAIL PENGIRIMAN:", 40, 305);
+            ctx.font = '15px monospace'; ctx.fillText(activeCtx.title || '-', 40, 345);
+            ctx.textAlign = 'right'; ctx.fillText(`x${activeCtx.q || 1}`, 460, 345);
+
+            ctx.textAlign = 'left'; ctx.font = 'italic 13px monospace'; ctx.fillStyle = '#4b5563';
+            let targetText = `Target: ${activeCtx.target || '-'}`;
+            if(targetText.length > 45) targetText = targetText.substring(0, 42) + "...";
+            ctx.fillText(targetText, 40, 385);
+
+            ctx.setLineDash([6, 4]); ctx.strokeStyle = '#374151'; ctx.beginPath(); ctx.moveTo(30, 440); ctx.lineTo(470, 440); ctx.stroke();
+            ctx.setLineDash([]); ctx.fillStyle = '#ff6600'; ctx.font = 'bold 24px sans-serif';
+            ctx.fillText("TOTAL BILLING:", 40, 495);
+            ctx.textAlign = 'right'; ctx.fillText(`Rp ${(activeCtx.c || 0).toLocaleString('id-ID')}`, 460, 495);
+
+            ctx.fillStyle = '#9ca3af'; ctx.font = 'bold 12px monospace'; ctx.textAlign = 'center';
+            ctx.fillText("* TERIMA KASIH TELAH MEMILIH REX STORE *", canvas.width / 2, 580);
+            ctx.fillText("POWERED BY IKIYGASIMA", canvas.width / 2, 605);
+
+            const link = document.createElement('a');
+            link.download = `STRUK-${activeCtx.id || 'ORDER'}.png`;
+            link.href = canvas.toDataURL('image/png'); link.click();
+        }
+
+        function forceRedirectWA(num, msg) {
+            document.getElementById('global-process-loader').style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+                setTimeout(() => { document.getElementById('global-process-loader').style.display = 'none'; }, 3000);
+            }, 1200); 
+        }
+
+        // STORAGE RETRIEVAL AND ORDER STATUS ENGINES
+        function getSafeDbLogs() {
+            try {
+                let db = localStorage.getItem('rex_super_logs');
+                return db ? JSON.parse(db) : [];
+            } catch (e) { return []; }
+        }
+
+        function saveLogToTerminal(id, date, t, q, c, buyer, target, orderStatus = "Proses Pemeriksaan") {
+            try {
+                let logs = getSafeDbLogs();
+                let obj = { id, date, title: t, q, cost: c, buyer, target, status: orderStatus };
+                logs.unshift(obj); 
+                if(logs.length > 50) logs.pop(); 
+                localStorage.setItem('rex_super_logs', JSON.stringify(logs)); 
+                loadSavedTransactions();
+            } catch (e) {}
+        }
+
+        function loadSavedTransactions() {
+            let box = document.getElementById('history-logs-terminal');
+            if(!box) return;
+            let logs = getSafeDbLogs();
+            if(logs.length === 0) {
+                box.innerHTML = `<div style="text-align:center; padding:40px 20px; color:var(--text-muted); font-size:13px;"><i class="fas fa-folder-open" style="font-size:35px; margin-bottom:15px; opacity:0.3; color:var(--primary-orange)"></i><br>Tidak ada riwayat rekaman transaksi terdeteksi.</div>`;
+                return;
+            }
+            
+            box.innerHTML = logs.map((l, index) => {
+                // Style configuration based on order tracking status
+                let statusColor = "#facc15";
+                if(l.status === "Selesai") statusColor = "#10b981";
+                if(l.status === "Antrean") statusColor = "#ff6600";
+
+                return `
+                <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:16px; border-radius:12px; margin-bottom:14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                        <div>
+                            <div style="font-weight:900; font-size:14px; color:#fff; margin-bottom:4px;">${l.title} (x${l.q || 1})</div>
+                            <div style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
+                                <span><i class="fas fa-fingerprint" style="color:var(--primary-orange)"></i> ${l.id}</span>
+                                <span><i class="far fa-clock" style="color:var(--primary-orange)"></i> ${l.date}</span>
+                            </div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="color:var(--primary-orange); font-weight:900; font-size:15px; text-shadow: 0 0 10px rgba(255,102,0,0.2);">
+                                Rp ${(l.cost || 0).toLocaleString('id-ID')}
+                            </div>
+                            <div style="font-size:10px; font-weight:900; color:${statusColor}; margin-top:4px; text-transform:uppercase; letter-spacing:0.5px;">
+                                <i class="fas fa-circle-dot" style="font-size:8px;"></i> Status: ${l.status || 'Sedang Diproses'}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:8px; border-top:1px solid rgba(255,255,255,0.04); padding-top:10px; margin-top:5px;">
+                        <button onclick="reprintHistoricalSlip(${index})" style="background:rgba(255,102,0,0.12); border:1px solid rgba(255,102,0,0.3); color:var(--primary-orange); font-size:10px; font-weight:800; padding:6px 12px; border-radius:6px; cursor:pointer; text-transform:uppercase;"><i class="fas fa-print"></i> Struk</button>
+                        <button onclick="simulateCheckRealtimeStatus('${l.id}', ${index})" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:10px; font-weight:800; padding:6px 12px; border-radius:6px; cursor:pointer; text-transform:uppercase;"><i class="fas fa-rotate"></i> Update Status</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function simulateCheckRealtimeStatus(id, index) {
+            let logs = getSafeDbLogs();
+            if(!logs[index]) return;
+            
+            const statuses = ["Memasuki Antrean", "Proses Pengecekan", "Pengerjaan Sistem", "Selesai Done"];
+            let currentStatus = logs[index].status || "Memasuki Antrean";
+            let nextIndex = (statuses.indexOf(currentStatus) + 1) % statuses.length;
+            
+            logs[index].status = statuses[nextIndex];
+            localStorage.setItem('rex_super_logs', JSON.stringify(logs));
+            loadSavedTransactions();
+            alert(`ID Transaksi ${id} berhasil diperbarui ke status: ${statuses[nextIndex]}`);
+        }
+
+        function reprintHistoricalSlip(index) {
+            let logs = getSafeDbLogs();
+            let targetedLog = logs[index];
+            if(!targetedLog) return;
+
+            activeCtx = {
+                id: targetedLog.id,
+                dateStr: targetedLog.date,
+                title: targetedLog.title,
+                q: targetedLog.q || 1,
+                c: targetedLog.cost,
+                buyer: targetedLog.buyer || 'Klien VIP',
+                target: targetedLog.target || '-'
+            };
+
+            document.getElementById('st-id').textContent = activeCtx.id;
+            document.getElementById('st-date').textContent = activeCtx.dateStr;
+            document.getElementById('st-name').textContent = activeCtx.buyer;
+            document.getElementById('st-item').textContent = activeCtx.title;
+            document.getElementById('st-qty').textContent = "x" + activeCtx.q;
+            document.getElementById('st-target').textContent = activeCtx.target;
+            document.getElementById('st-total').textContent = "Rp " + activeCtx.c.toLocaleString('id-ID');
+
+            document.getElementById('receipt-continue-wa-btn').onclick = function() {
+                toggleAppModal('receipt-preview-modal', false);
+            };
+
+            toggleAppModal('receipt-preview-modal', true);
+        }
+
+        function clearAllTransactionLogs() {
+            if(confirm("Apakah Anda yakin ingin mengosongkan log riwayat transaksi pada perangkat ini?")) { 
+                try { localStorage.removeItem('rex_super_logs'); loadSavedTransactions(); } catch(e) {}
+            }
+        }
+
+        // SECONDARY FUNCTION INTEGRATIONS
+        function submitChannelOrderSequence() {
+            let name = document.getElementById('channel-buyer-name').value.trim();
+            let qty = parseInt(document.getElementById('channel-followers-qty').value, 10);
+            if(!name || isNaN(qty) || qty < 50) return alert("❌ Data tidak valid. Kelompok kuantitas pengikut minimal 50!");
+            let cost = (qty / 50) * 20000;
+            saveLogToTerminal("RX-"+Math.floor(10000+Math.random()*90000), new Date().toLocaleString('id-ID'), "Saluran WA", qty, cost, name, "Pembelian Pengikut Saluran", "Memasuki Antrean");
+            toggleAppModal('channel-modal-backdrop', false);
+            forceRedirectWA(WA_FOCUSED_GATEWAY, `*ORDER SALURAN INSTAN - REX STORE*\n👤 Klien: ${name}\n📈 Volume: ${qty} Followers\n💰 Estimasi Biaya: Rp ${cost.toLocaleString('id-ID')}\n\n_Note: Biaya dapat berubah sewaktu-waktu tergantung penambahan sistem khusus._`);
+        }
+
+        function submitWebDevelopmentOrder() {
+            let n = document.getElementById('web-client-name').value.trim();
+            let s = document.getElementById('web-spec').value.trim();
+            if(!n || !s) return alert("❌ Kolom pendaftaran spesifikasi pengerjaan wajib diisi!");
+            saveLogToTerminal("RX-"+Math.floor(10000+Math.random()*90000), new Date().toLocaleString('id-ID'), "Pembuatan Website", 1, 0, n, s, "Proses Pemeriksaan");
+            toggleAppModal('web-modal-backdrop', false);
+            forceRedirectWA(WA_FOCUSED_GATEWAY, `*REQUEST KUSTOMISASI DEV WEBSITE*\n👤 Klien: ${n}\n💻 Kebutuhan Fitur:\n_${s}_\n\n_Note: Harga final ditentukan setelah pembacaan skema sistem selesai._`);
+        }
+
+        function submitWebDevelopmentOrder() {
+            let n = document.getElementById('web-client-name').value.trim();
+            let s = document.getElementById('web-spec').value.trim();
+            if(!n || !s) return alert("❌ Kolom pendaftaran spesifikasi pengerjaan wajib diisi!");
+            saveLogToTerminal("RX-"+Math.floor(10000+Math.random()*90000), new Date().toLocaleString('id-ID'), "Pembuatan Website", 1, 0, n, s, "Proses Pemeriksaan");
+            toggleAppModal('web-modal-backdrop', false);
+            forceRedirectWA(WA_FOCUSED_GATEWAY, `*REQUEST KUSTOMISASI DEV WEBSITE*\n👤 Klien: ${n}\n💻 Kebutuhan Fitur:\n_${s}_\n\n_Note: Harga final ditentukan setelah pembacaan skema sistem selesai._`);
+        }
+
+        function submitReportSystemLog() {
+            let n = document.getElementById('report-sender-name').value.trim();
+            let k = document.getElementById('report-issue-details').value.trim();
+            if(!n || !k) return alert("❌ Gagal. Mohon deskripsikan kendala bug Anda secara terperinci!");
+            toggleAppModal('report-modal-backdrop', false);
+            forceRedirectWA(WA_FOCUSED_GATEWAY, `*LAPORAN KENDALA OPERASIONAL REX STORE*\n👤 Pelapor: ${n}\n⚠️ Rincian Masalah:\n_${k}_`);
+        }
+    </script>
+</body>
+</html>
